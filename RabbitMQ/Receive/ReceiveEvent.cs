@@ -70,11 +70,9 @@ public class ReceiveEvent : IReceiveEvent
             };
 
             smtpClient.Send(message);
-
-            Console.Write(email);
         };
 
-        _channel.BasicConsume(queue: QueueName.EmailQueue, consumer: consumer);
+        _channel.BasicConsume(autoAck: true, queue: QueueName.EmailQueue, consumer: consumer);
     }
 
     class SmtpConfiguration
