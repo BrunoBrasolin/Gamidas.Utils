@@ -5,15 +5,15 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
 
-namespace Gamidas.Utils.RabbitMQ;
+namespace Gamidas.Utils.RabbitMQ.Send;
 
-public class SentEvent : ISentEvent
+public class SendEvent : ISendEvent
 {
     private readonly IConfiguration _configuration;
     private IModel _channel;
     private IConnection _connection;
 
-    public SentEvent(IConfiguration configuration)
+    public SendEvent(IConfiguration configuration)
     {
         _configuration = configuration;
     }
@@ -23,30 +23,30 @@ public class SentEvent : ISentEvent
         ConnectionFactory factory = new()
         {
             HostName = _configuration["RabbitMQ:HostName"],
-            Port = Int32.Parse(_configuration["RabbitMQ:Port"]),
+            Port = int.Parse(_configuration["RabbitMQ:Port"]),
             UserName = _configuration["RabbitMQ:UserName"],
             Password = _configuration["RabbitMQ:Password"],
         };
 
-        this._connection = factory.CreateConnection();
-        this._channel = this._connection.CreateModel();
+        _connection = factory.CreateConnection();
+        _channel = _connection.CreateModel();
     }
 
     private void CloseConnection()
     {
-        this._channel.Close();
-        this._connection.Close();
+        _channel.Close();
+        _connection.Close();
     }
 
-    public void SentEmail(EmailModel email)
+    public void SendEmail(EmailModel email)
     {
-        this.OpenConnection();
+        OpenConnection();
 
         string json = JsonConvert.SerializeObject(email);
         byte[] body = Encoding.UTF8.GetBytes(json);
 
-        this._channel.BasicPublish(exchange: "", routingKey: QueueName.EmailQueue, body: body);
+        _channel.BasicPublish(exchange: "", routingKey: QueueName.EmailQueue, body: body);
 
-        this.CloseConnection();
+        CloseConnection();
     }
 }
