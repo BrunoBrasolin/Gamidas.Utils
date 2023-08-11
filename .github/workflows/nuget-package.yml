@@ -2,12 +2,16 @@
 
 name: publish
 on:
+  workflow_dispatch:
   push:
-    branches: [ "master" ]
-    paths-ignore:
-      - '**/README.md'
+    branches:
+      - 'master'
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - '*'
+  release:
+    types:
+      - published
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
