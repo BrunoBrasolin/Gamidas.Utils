@@ -22,7 +22,7 @@ defaults:
 
 jobs:
   call-nuget-workflow:
-    uses: BrunoBrasolin/workflow-template/nuget.yml@main
+    uses: BrunoBrasolin/workflow-template/.github/workflows/nuget.yml@main
     with:
       NuGetDirectory: ${{ env.NuGetDirectory }}
     secrets: inherit
