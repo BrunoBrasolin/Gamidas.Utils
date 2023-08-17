@@ -21,4 +21,3 @@ jobs:
   nuget-workflow:
     uses: BrunoBrasolin/workflow-template/.github/workflows/nuget.yml@main
     secrets: inherit
-      
