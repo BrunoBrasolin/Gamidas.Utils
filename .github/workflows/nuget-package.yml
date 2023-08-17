@@ -13,9 +13,6 @@ on:
     types:
       - published
 
-env:
-  NUGETDIRECTORY: ${{ github.workspace}}/nuget
-
 defaults:
   run:
     shell: pwsh
@@ -23,7 +20,5 @@ defaults:
 jobs:
   nuget-workflow:
     uses: BrunoBrasolin/workflow-template/.github/workflows/nuget.yml@main
-    with:
-      NuGetDirectory: ${{ env.NUGETDIRECTORY }}
     secrets: inherit
       
