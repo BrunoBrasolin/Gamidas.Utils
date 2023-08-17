@@ -21,6 +21,6 @@ jobs:
   nuget-workflow:
     uses: BrunoBrasolin/workflow-template/.github/workflows/nuget.yml@main
     with:
-      NuGetDirectory: ${{ github.workspace}}/nuget
+      NuGetDirectory: $GITHUB_WORKSPACE/nuget
     secrets: inherit
       
